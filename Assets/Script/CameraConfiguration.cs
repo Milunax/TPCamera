@@ -7,6 +7,16 @@ public struct CameraConfiguration
     public float yaw, pitch, roll, distance, fov;
     public Vector3 pivot;
 
+    public CameraConfiguration(float pYaw, float pPitch, float pRoll, float pFov, float pDistance, Vector3 pPivot)
+    {
+        yaw = pYaw;
+        pitch = pPitch;
+        roll = pRoll;
+        distance = pDistance;
+        fov = pFov;
+        pivot = pPivot;
+    }
+
     public Quaternion GetRotation()
     {
         return Quaternion.Euler(pitch, yaw, roll);
