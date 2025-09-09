@@ -6,9 +6,14 @@ public class CameraController : MonoBehaviour
     public static CameraController instance;
 
     public Camera mainCamera;
+
+    [SerializeField] private float speed;
     private CameraConfiguration configuration;
 
     private List<AView> activeViews = new List<AView>();
+
+    private CameraConfiguration currentConfiguration;
+    private CameraConfiguration targetConfiguration;
 
     private void Awake()
     {
@@ -20,6 +25,12 @@ public class CameraController : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    private void Start()
+    {
+        currentConfiguration = ComputeAverage();
+        targetConfiguration = ComputeAverage();
     }
 
     private void Update()
@@ -40,9 +51,24 @@ public class CameraController : MonoBehaviour
 
     private void ApplyConfiguration()
     {
-        configuration = ComputeAverage();
-        mainCamera.transform.position = configuration.GetPosition();
-        mainCamera.transform.rotation = configuration.GetRotation();
+        targetConfiguration = ComputeAverage();
+
+        if(speed * Time.deltaTime < 1.0f)
+        {
+            currentConfiguration.pivot = Vector3.Lerp(currentConfiguration.pivot, targetConfiguration.pivot, speed * Time.deltaTime);
+            currentConfiguration.distance = Mathf.Lerp(currentConfiguration.distance, targetConfiguration.distance, speed * Time.deltaTime);
+            currentConfiguration.pitch = Mathf.Lerp(currentConfiguration.pitch, targetConfiguration.pitch, speed * Time.deltaTime);
+            currentConfiguration.yaw = Mathf.Lerp(currentConfiguration.yaw, targetConfiguration.yaw, speed * Time.deltaTime);
+            currentConfiguration.roll = Mathf.Lerp(currentConfiguration.roll, targetConfiguration.roll, speed * Time.deltaTime);
+
+            mainCamera.transform.position = currentConfiguration.GetPosition();
+            mainCamera.transform.rotation = currentConfiguration.GetRotation();
+        }  
+        else
+        {
+            mainCamera.transform.position = targetConfiguration.GetPosition();
+            mainCamera.transform.rotation = targetConfiguration.GetRotation();
+        }
     }
 
     private CameraConfiguration ComputeAverage()
