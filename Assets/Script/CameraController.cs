@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     public Camera mainCamera;
     private CameraConfiguration configuration;
 
-    private List<AView> activeViews;
+    private List<AView> activeViews = new List<AView>();
 
     private void Awake()
     {
@@ -22,16 +22,10 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        activeViews = new List<AView>();
-    }
-
     private void Update()
     {
         ApplyConfiguration();
-
-        configuration = ComputeAverage();
+        
     }
 
     public void AddView(AView view)
@@ -46,6 +40,7 @@ public class CameraController : MonoBehaviour
 
     private void ApplyConfiguration()
     {
+        configuration = ComputeAverage();
         mainCamera.transform.position = configuration.GetPosition();
         mainCamera.transform.rotation = configuration.GetRotation();
     }

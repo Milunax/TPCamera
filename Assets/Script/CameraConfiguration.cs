@@ -24,7 +24,7 @@ public struct CameraConfiguration
 
     public Vector3 GetPosition()
     {
-        return pivot + distance * Vector3.back;
+        return GetRotation() * Vector3.back * distance + pivot;
     }
 
     public void DrawGizmos(Color color)
