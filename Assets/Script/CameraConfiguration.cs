@@ -14,7 +14,8 @@ public struct CameraConfiguration
 
     public Vector3 GetPosition()
     {
-        return pivot + distance * Vector3.back;
+        Vector3 offset = GetRotation() * (Vector3.back * distance);
+        return pivot + offset;
     }
 
     public void DrawGizmos(Color color)
@@ -27,5 +28,4 @@ public struct CameraConfiguration
         Gizmos.DrawFrustum(Vector3.zero, fov, 0.5f, 0f, Camera.main.aspect);
         Gizmos.matrix = Matrix4x4.identity;
     }
-
 }
