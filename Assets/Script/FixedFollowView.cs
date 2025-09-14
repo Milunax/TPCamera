@@ -1,5 +1,3 @@
-using System;
-using UnityEditor.Timeline;
 using UnityEngine;
 
 public class FixedFollowView : AView

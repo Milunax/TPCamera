@@ -18,11 +18,47 @@ public class Rail : MonoBehaviour
 
     public float GetLength()
     {
-        return Vector3.Distance(transform.GetChild(0).position, transform.GetChild(transform.childCount - 1).position);
+        return length;
     }
 
-    public Vector3 GetPosition()
+    public Vector3 GetPosition(float distance)
     {
+        
+        float distLeft = distance;
+        int childIndex = 0;
+
+        while (distance > 0)
+        {
+            float distBetweenCurrentAndNextChild = Vector3.Distance(transform.GetChild(childIndex).position, transform.GetChild(childIndex + 1).position);
+
+            if (distLeft - distBetweenCurrentAndNextChild <= 0)
+            {
+                Vector3 dir = transform.GetChild(childIndex + 1).position - transform.GetChild(childIndex).position;
+                dir.Normalize();
+
+                return dir * distLeft;
+            }
+            else
+            {
+                distLeft -= distBetweenCurrentAndNextChild;
+            }
+
+            if (!isLoop)
+            {
+                if (childIndex + 1 == transform.childCount && distLeft >= 0)
+                {
+                    return transform.transform.GetChild(childIndex).position;
+                }
+                childIndex++;
+            }
+            else
+            {
+                if(childIndex + 1 == transform.childCount && distLeft > 0) childIndex = 0;
+                else if(distLeft > 0) childIndex++;
+            }        
+        }
+
+        //on trouve pas de point
         return Vector3.zero;
     }
 
