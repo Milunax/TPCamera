@@ -16,5 +16,4 @@ public class FixedView : AView
         };
         return cameraConfiguration;
     }
-
 }
