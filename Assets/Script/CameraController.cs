@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
@@ -10,8 +11,12 @@ public class CameraController : MonoBehaviour
     public static CameraController instance;
 
     public Camera mainCamera;
+    public float smoothSpeed = 1f;
+    private CameraConfiguration currentConfig;
+    private CameraConfiguration targetConfig;
     private CameraConfiguration configuration;
     private List<AView> activeViews = new List<AView>();
+    
 
     private void Awake()
     {
@@ -24,18 +29,24 @@ public class CameraController : MonoBehaviour
             instance = this;
         }
     }
+    public void Start()
+    {
+        targetConfig = ComputeAverage();
+        currentConfig = targetConfig;
+    }
 
     private void Update()
     {
-        configuration = ComputeAverage();
+        targetConfig = ComputeAverage();
+        currentConfig = CameraConfiguration.Lerp(currentConfig, targetConfig, smoothSpeed * Time.deltaTime);
         ApplyConfiguration(mainCamera);
     }
 
     private void ApplyConfiguration(Camera camera)
     {
-        camera.transform.position = configuration.GetPosition();
-        camera.transform.rotation = configuration.GetRotation();
-        camera.fieldOfView = configuration.fov;
+        camera.transform.position = currentConfig.GetPosition();
+        camera.transform.rotation = currentConfig.GetRotation();
+        camera.fieldOfView = currentConfig.fov;
     }
     public void AddView(AView view)
     {
@@ -84,7 +95,6 @@ public class CameraController : MonoBehaviour
         }
         return Vector2.SignedAngle(Vector2.right, sum);
     }
-
     private void OnDrawGizmos()
     {
         configuration.DrawGizmos(Color.red);

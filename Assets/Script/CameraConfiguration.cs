@@ -17,6 +17,18 @@ public struct CameraConfiguration
         Vector3 offset = GetRotation() * (Vector3.back * distance);
         return pivot + offset;
     }
+    public static CameraConfiguration Lerp(CameraConfiguration startConfig, CameraConfiguration endConfig, float t)
+    {
+        return new CameraConfiguration
+        {
+            yaw = Mathf.Lerp(startConfig.yaw, endConfig.yaw, t),
+            pitch = Mathf.Lerp(startConfig.pitch, endConfig.pitch, t),
+            roll = Mathf.Lerp(startConfig.roll, endConfig.roll, t),
+            fov = Mathf.Lerp(startConfig.fov, endConfig.fov, t),
+            distance = Mathf.Lerp(startConfig.distance, endConfig.distance, t),
+            pivot = Vector3.Lerp(startConfig.pivot, endConfig.pivot, t)
+        };
+    }
 
     public void DrawGizmos(Color color)
     {
