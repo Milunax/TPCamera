@@ -27,4 +27,20 @@ public static class MathUtils
     {
         return (1 - t) * QuadraticBezier(A, B, C, t) + t * QuadraticBezier(B, C, D, t);
     }
+
+    public static float LinearBezier(float A, float B, float t)
+    {
+        return (1 - t) * A + t * B;
+    }
+
+    public static float QuadraticBezier(float A, float B, float C, float t)
+    {
+        return (1 - t) * LinearBezier(A, B, t) + t * LinearBezier(B, C, t);
+    }
+
+    public static float CubicBezier(float A, float B, float C, float D, float t)
+    {
+        return (1 - t) * QuadraticBezier(A, B, C, t) + t * QuadraticBezier(B, C, D, t);
+    }
+
 }

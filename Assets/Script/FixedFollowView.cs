@@ -23,7 +23,7 @@ public class FixedFollowView : AView
         float pitchDiff = Mathf.DeltaAngle(centralPitch, pitch);
 
         return new CameraConfiguration(centralYaw + Mathf.Clamp(yaw, -yawOffsetMax, yawOffsetMax), centralPitch + Mathf.Clamp(pitch, -pitchOffsetMax, pitchOffsetMax), roll, fov, 0, transform.position);
-    }
+    }   
 
     private (float, float) CalculateAngles(Vector3 targetPos)
     {

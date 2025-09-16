@@ -92,6 +92,7 @@ public class CameraController : MonoBehaviour
             totalDistance += view.GetConfiguration().distance * view.weight;
             totalPivot += view.GetConfiguration().pivot * view.weight;
         }
+        if (Mathf.Approximately(totalWeight, 0.0f)) totalWeight = 1;
 
         CameraConfiguration newConfiguration = new CameraConfiguration(
                 averageYaw,
