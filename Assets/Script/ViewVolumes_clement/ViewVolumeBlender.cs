@@ -14,6 +14,42 @@ public class ViewVolumeBlender : MonoBehaviour
         else Destroy(this);
     }
 
+    private void Update()
+    {
+        foreach(AView view in VolumesPerViews.Keys)
+        {
+            view.weight = 0.0f;
+        }
+
+        ActiveViewVolumes.Sort((volumeA, volumeB) =>
+        {
+            if(volumeA.priority < volumeB.priority) return -1;
+            if(volumeA.priority > volumeB.priority) return 1;
+            if (volumeA.priority == volumeB.priority)
+            {
+                if(volumeA.Uid <  volumeB.Uid) return -1;
+                if(volumeA.Uid > volumeB.Uid) return 1;
+            }
+            return 0;
+        });
+
+        foreach(AViewVolume volume in ActiveViewVolumes)
+        {
+            float weight = Mathf.Clamp(volume.ComputeSelfWeight(), 0.0f, 1.0f);
+            float remainingWeight = 1.0f - weight;
+            foreach(AView view in VolumesPerViews.Keys)
+            {
+                view.weight *= remainingWeight;
+                if (VolumesPerViews[view].Contains(volume))
+                {
+                    view.weight += weight;
+                }
+            }
+
+            
+        }
+    }
+
     public void AddVolume(AViewVolume volume)
     {
         ActiveViewVolumes.Add(volume);
