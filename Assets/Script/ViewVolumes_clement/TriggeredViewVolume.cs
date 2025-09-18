@@ -6,6 +6,7 @@ public class TriggeredViewVolume : AViewVolume
 
     private void OnTriggerEnter(Collider other)
     {
+        //Verification a revoir
         if(target.TryGetComponent(out Collider collider) && collider == other)
         {
             SetActive(true);
