@@ -3,12 +3,12 @@ using UnityEngine;
 public abstract class AView : MonoBehaviour
 {
     public float weight;
-    public bool isActiveOnStart;
+    //public bool isActiveOnStart;
 
-    private void Start()
+    /* private void Start()
     {
         if (isActiveOnStart) SetActive(true);
-    }
+    }*/
 
     public abstract CameraConfiguration GetConfiguration();
     public void SetActive(bool active)
