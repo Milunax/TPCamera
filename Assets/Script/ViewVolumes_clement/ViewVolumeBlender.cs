@@ -35,4 +35,12 @@ public class ViewVolumeBlender : MonoBehaviour
             volume.view.SetActive(false);
         }
     }
+
+    private void OnGUI()
+    {
+        foreach(AViewVolume volume in ActiveViewVolumes)
+        {
+            GUILayout.Label(volume.name);
+        }
+    }
 }
