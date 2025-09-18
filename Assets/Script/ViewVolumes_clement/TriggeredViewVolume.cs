@@ -6,16 +6,15 @@ public class TriggeredViewVolume : AViewVolume
 
     private void OnTriggerEnter(Collider other)
     {
-        //Verification a revoir
-        if(target.TryGetComponent(out Collider collider) && collider == other)
+        if(other.gameObject == target)
         {
-            SetActive(true);
+            SetActive(true);          
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (target.TryGetComponent(out Collider collider) && collider == other)
+        if (other.gameObject == target)
         {
             SetActive(false);
         }
