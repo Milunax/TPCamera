@@ -19,9 +19,12 @@ public struct CameraConfiguration
     }
     public static CameraConfiguration Lerp(CameraConfiguration startConfig, CameraConfiguration endConfig, float t)
     {
+        Vector2 startYawDir = new Vector2(Mathf.Cos(Mathf.Deg2Rad * startConfig.yaw), Mathf.Sin(Mathf.Deg2Rad * startConfig.yaw));
+        Vector2 endYawDir = new Vector2(Mathf.Cos(Mathf.Deg2Rad * endConfig.yaw), Mathf.Sin(Mathf.Deg2Rad * endConfig.yaw));
+
         return new CameraConfiguration
         {
-            yaw = Mathf.Lerp(startConfig.yaw, endConfig.yaw, t),
+            yaw = Vector2.SignedAngle(Vector2.right, (Vector2.Lerp(startYawDir, endYawDir, t))),
             pitch = Mathf.Lerp(startConfig.pitch, endConfig.pitch, t),
             roll = Mathf.Lerp(startConfig.roll, endConfig.roll, t),
             fov = Mathf.Lerp(startConfig.fov, endConfig.fov, t),

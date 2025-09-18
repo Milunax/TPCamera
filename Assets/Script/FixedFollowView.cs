@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FixedFollowView : AView
 {
-    public float roll = 90, fov = 90f, yawOffsetMax = 45f, pitchOffsetMax = 30f;
+    public float roll, fov = 90f, yawOffsetMax = 45f, pitchOffsetMax = 30f;
     public Transform target;
     public GameObject centralPoint;
     public override CameraConfiguration GetConfiguration()
