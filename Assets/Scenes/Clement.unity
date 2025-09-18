@@ -694,9 +694,9 @@ MonoBehaviour:
   weight: 1
   isActiveOnStart: 1
   pitch:
-  - -60
+  - 16.9
   - 0
-  - 60
+  - 8.8
   roll:
   - 0
   - 0

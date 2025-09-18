@@ -55,17 +55,23 @@ public class CameraController : MonoBehaviour
 
         if(speed * Time.deltaTime < 1.0f)
         {
+            Vector2 currentYawDir = new Vector2(Mathf.Cos(Mathf.Deg2Rad * currentConfiguration.yaw), Mathf.Sin(Mathf.Deg2Rad * currentConfiguration.yaw));
+            Vector2 targetYawDir = new Vector2(Mathf.Cos(Mathf.Deg2Rad * targetConfiguration.yaw), Mathf.Sin(Mathf.Deg2Rad * targetConfiguration.yaw));
+
+
             currentConfiguration.pivot = Vector3.Lerp(currentConfiguration.pivot, targetConfiguration.pivot, speed * Time.deltaTime);
             currentConfiguration.distance = Mathf.Lerp(currentConfiguration.distance, targetConfiguration.distance, speed * Time.deltaTime);
             currentConfiguration.pitch = Mathf.Lerp(currentConfiguration.pitch, targetConfiguration.pitch, speed * Time.deltaTime);
-            currentConfiguration.yaw = Mathf.Lerp(currentConfiguration.yaw, targetConfiguration.yaw, speed * Time.deltaTime);
+            currentConfiguration.yaw = Vector2.SignedAngle(Vector2.right, (Vector2.Lerp(currentYawDir, targetYawDir, speed * Time.deltaTime)));
             currentConfiguration.roll = Mathf.Lerp(currentConfiguration.roll, targetConfiguration.roll, speed * Time.deltaTime);
+
 
             mainCamera.transform.position = currentConfiguration.GetPosition();
             mainCamera.transform.rotation = currentConfiguration.GetRotation();
         }  
         else
         {
+            currentConfiguration = targetConfiguration;
             mainCamera.transform.position = targetConfiguration.GetPosition();
             mainCamera.transform.rotation = targetConfiguration.GetRotation();
         }
