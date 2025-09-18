@@ -12,6 +12,8 @@ public class CameraController : MonoBehaviour
 
     private List<AView> activeViews = new List<AView>();
 
+    private bool isCutRequired;
+
     private CameraConfiguration currentConfiguration;
     private CameraConfiguration targetConfiguration;
 
@@ -36,7 +38,11 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         ApplyConfiguration();
-        
+        if(isCutRequired)
+        {
+            currentConfiguration = targetConfiguration;
+            isCutRequired = false;
+        }
     }
 
     public void AddView(AView view)
@@ -121,6 +127,12 @@ public class CameraController : MonoBehaviour
             sum += new Vector2(Mathf.Cos(config.yaw * Mathf.Deg2Rad), Mathf.Sin(config.yaw * Mathf.Deg2Rad)) * view.weight;
         }
         return Vector2.SignedAngle(Vector2.right, sum);
+    }
+
+    public void Cut()
+    {
+        currentConfiguration = targetConfiguration;
+        isCutRequired = false;
     }
 
     private void OnDrawGizmos()

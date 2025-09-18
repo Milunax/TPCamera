@@ -14,7 +14,7 @@ public class ViewVolumeBlender : MonoBehaviour
         else Destroy(this);
     }
 
-    private void Update()
+    public void Update()
     {
         foreach(AView view in VolumesPerViews.Keys)
         {

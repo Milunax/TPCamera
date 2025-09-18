@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class AView : MonoBehaviour
 {
     public float weight;
+    public bool isCutOnSwitch;
     //public bool isActiveOnStart;
 
     /* private void Start()
@@ -14,6 +15,11 @@ public abstract class AView : MonoBehaviour
     public void SetActive(bool active)
     {
         CameraController.instance.AddView(this);
+        if (isCutOnSwitch)
+        {
+            ViewVolumeBlender.Instance.Update();
+            CameraController.instance.Cut();
+        }
     }
 
     public virtual void OnDrawGizmos()
