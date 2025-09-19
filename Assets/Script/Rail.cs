@@ -68,10 +68,9 @@ public class Rail : MonoBehaviour
     public float GetDistanceFromPosition(Vector3 targetPosition)
     {
         childCount = transform.childCount;
+        int index = 0;
 
-        Transform node = transform.GetChild(0);
         float segmentDistance = 0;
-
         float shortestDistance = float.PositiveInfinity;
 
         for (int i = 0; i < childCount; i++)
@@ -87,28 +86,24 @@ public class Rail : MonoBehaviour
                 if (targetDistance < shortestDistance)
                 {
                     shortestDistance = targetDistance;
-                    node = currentNode;
+                    index = i;
                     segmentDistance = Vector3.Distance(currentNode.position, nearestPointOnSegment);
                 }
             }
         }
-        if (node != null)
-            return GetDistanceFromPoint(node) + segmentDistance;
-        return 0;
+        return GetDistanceFromIndex(index) + segmentDistance;
     }
-    public float GetDistanceFromPoint(Transform point)
+    public float GetDistanceFromIndex(int index)
     {
         float distance = 0;
         childCount = transform.childCount;
-
-        if (!point.IsChildOf(transform)) return distance;
 
         for (int i  = 0; i < transform.childCount;i++)
         {
             currentNode = transform.GetChild(i % childCount);
             nextNode = transform.GetChild((i + 1) % childCount);
 
-            if (currentNode == point)
+            if (currentNode == transform.GetChild(index))
             {
                 return distance;
             }
