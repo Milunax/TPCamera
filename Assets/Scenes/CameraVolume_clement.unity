@@ -164,10 +164,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1
+  isCutOnSwitch: 0
   yaw: 0
   pitch: 0
   roll: 0
-  fov: 0
+  fov: 90
 --- !u!1 &65960062
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,10 +214,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 2
+  isCutOnSwitch: 0
   yaw: 0
   pitch: 0
   roll: 0
-  fov: 0
+  fov: 90
 --- !u!1 &177149414
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,10 +315,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 2
+  isCutOnSwitch: 0
   yaw: 0
   pitch: 0
   roll: 0
-  fov: 0
+  fov: 90
 --- !u!1 &641326698
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,7 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185aff268dfeda8429e9a4a01da8be26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priority: 1
+  priority: -1
   view: {fileID: 738058496}
   Uid: 0
 --- !u!4 &738058495
@@ -586,10 +589,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1
+  isCutOnSwitch: 0
   yaw: 0
   pitch: 0
   roll: 0
-  fov: 0
+  fov: 90
 --- !u!1 &1259656246
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 641326700}
-  speed: 0
+  speed: 10
 --- !u!4 &1259656248
 Transform:
   m_ObjectHideFlags: 0

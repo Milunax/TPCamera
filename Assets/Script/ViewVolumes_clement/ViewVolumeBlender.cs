@@ -23,14 +23,10 @@ public class ViewVolumeBlender : MonoBehaviour
 
         ActiveViewVolumes.Sort((volumeA, volumeB) =>
         {
-            if(volumeA.priority < volumeB.priority) return -1;
-            if(volumeA.priority > volumeB.priority) return 1;
-            if (volumeA.priority == volumeB.priority)
-            {
-                if(volumeA.Uid <  volumeB.Uid) return -1;
-                if(volumeA.Uid > volumeB.Uid) return 1;
-            }
-            return 0;
+            int result = volumeA.priority.CompareTo(volumeB.priority);
+
+            if(result == 0) return volumeA.Uid.CompareTo(volumeB.Uid);
+            return result;  
         });
 
         foreach(AViewVolume volume in ActiveViewVolumes)
@@ -44,9 +40,7 @@ public class ViewVolumeBlender : MonoBehaviour
                 {
                     view.weight += weight;
                 }
-            }
-
-            
+            }            
         }
     }
 

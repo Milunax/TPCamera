@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SphereViewVolume : AViewVolume
@@ -18,7 +19,13 @@ public class SphereViewVolume : AViewVolume
 
     public override float ComputeSelfWeight()
     {
-        return Mathf.Clamp(innerRadius/outerRadius, 0.0f, 1.0f);
+        if (distance >= outerRadius)
+            return 0f;
+
+        if (distance <= innerRadius)
+            return 1f;
+
+        return Mathf.Clamp((outerRadius - distance) / (outerRadius - innerRadius), 0.0f, 1.0f);
     }
 
     private void OnDrawGizmos()

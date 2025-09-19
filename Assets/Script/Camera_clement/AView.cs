@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 
 public abstract class AView : MonoBehaviour
 {
@@ -14,7 +15,9 @@ public abstract class AView : MonoBehaviour
     public abstract CameraConfiguration GetConfiguration();
     public void SetActive(bool active)
     {
-        CameraController.instance.AddView(this);
+        if(active) CameraController.instance.AddView(this);
+        else CameraController.instance.RemoveView(this);
+
         if (isCutOnSwitch)
         {
             ViewVolumeBlender.Instance.Update();

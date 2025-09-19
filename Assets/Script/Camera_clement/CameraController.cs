@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-100)]
 public class CameraController : MonoBehaviour
 {
     public static CameraController instance;
@@ -104,7 +105,7 @@ public class CameraController : MonoBehaviour
             totalDistance += view.GetConfiguration().distance * view.weight;
             totalPivot += view.GetConfiguration().pivot * view.weight;
         }
-        if (Mathf.Approximately(totalWeight, 0.0f)) totalWeight = 1;
+        if (Mathf.Approximately(totalWeight, 0.0f)) totalWeight = 1.0f;
 
         CameraConfiguration newConfiguration = new CameraConfiguration(
                 averageYaw,

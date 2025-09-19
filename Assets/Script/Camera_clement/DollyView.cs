@@ -33,9 +33,9 @@ public class DollyView : AView
         return (tempYaw, tempPitch);
     }
 
-    private void FixedUpdate() //Maybe a l'update ??
+    private void Update()
     {
-        if(!isAuto) distanceOnRail = Mathf.Clamp(Input.GetAxis("Horizontal") * speed * Time.fixedDeltaTime, 0.0f, rail.GetLength());
+        if(!isAuto) distanceOnRail = Mathf.Clamp(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0.0f, rail.GetLength());
         else
         {
             int railChildIndex = 0;
