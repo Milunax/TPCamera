@@ -400,7 +400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1195470025}
-  smoothSpeed: 10
+  smoothSpeed: 5
 --- !u!65 &540583606
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -484,7 +484,7 @@ Transform:
   m_GameObject: {fileID: 540583604}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.068, y: -1.29, z: -1.343}
+  m_LocalPosition: {x: 0.44, y: 0.14, z: 0.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1007,7 +1007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f75d6d6b0ded0b4b9e4f945566eee4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLoop: 0
+  isLoop: 1
 --- !u!4 &2088822570
 Transform:
   m_ObjectHideFlags: 0

@@ -1,11 +1,16 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Rail : MonoBehaviour
 {
     public bool isLoop = false;
     private float length;
     private Transform[] nodes;
+
+    private int childCount;
+    private Transform currentNode;
+    private Transform nextNode;
 
     private void Awake()
     {
@@ -38,12 +43,9 @@ public class Rail : MonoBehaviour
     public Vector3 GetPosition(float distance)
     {
         int index = 0;
-        int childCount = transform.childCount;
+        childCount = transform.childCount;
 
-        Transform currentNode = transform.GetChild(index % childCount);
-        Transform nextNode = transform.GetChild((index + 1) % childCount);
-
-        Vector3 targetPosition = currentNode.position;
+        Vector3 targetPosition = transform.GetChild(0).position;
 
         while (distance > 0)
         {
@@ -63,23 +65,57 @@ public class Rail : MonoBehaviour
         }
         return targetPosition;
     }
-    public float GetNearestDistance(Vector3 position)
+    public float GetDistanceFromPosition(Vector3 targetPosition)
     {
-        int index = 0;
-        int childCount = transform.childCount;
-        float distance = 0;
+        childCount = transform.childCount;
 
-        Transform currentNode = transform.GetChild(index % childCount);
-        Transform nextNode = transform.GetChild(( index + 1) % childCount);
+        Transform node = transform.GetChild(0);
+        float segmentDistance = 0;
+
+        float shortestDistance = float.PositiveInfinity;
 
         for (int i = 0; i < childCount; i++)
         {
+            currentNode = transform.GetChild(i % childCount);
+            nextNode = transform.GetChild((i + 1) % childCount);
 
+            if (currentNode != null && nextNode != null)
+            {
+                Vector3 nearestPointOnSegment = MathUtils.GetNearestPointOnSegment(currentNode.position, nextNode.position, targetPosition);
+                float targetDistance = Vector3.Distance(nearestPointOnSegment, targetPosition);
+
+                if (targetDistance < shortestDistance)
+                {
+                    shortestDistance = targetDistance;
+                    node = currentNode;
+                    segmentDistance = Vector3.Distance(currentNode.position, nearestPointOnSegment);
+                }
+            }
         }
+        if (node != null)
+            return GetDistanceFromPoint(node) + segmentDistance;
+        return 0;
+    }
+    public float GetDistanceFromPoint(Transform point)
+    {
+        float distance = 0;
+        childCount = transform.childCount;
 
+        if (!point.IsChildOf(transform)) return distance;
+
+        for (int i  = 0; i < transform.childCount;i++)
+        {
+            currentNode = transform.GetChild(i % childCount);
+            nextNode = transform.GetChild((i + 1) % childCount);
+
+            if (currentNode == point)
+            {
+                return distance;
+            }
+            distance += Vector3.Distance(currentNode.position, nextNode.position);
+        }
         return distance;
     }
-
     void OnDrawGizmos()
     {
         if (transform.childCount < 2) return;
@@ -87,12 +123,12 @@ public class Rail : MonoBehaviour
         Gizmos.color = Color.red;
         for (int i = 0; i < transform.childCount - 1; i++)
         {
-            Transform currentNode = transform.GetChild(i);
-            Transform NextNode = transform.GetChild(i + 1);
+            currentNode = transform.GetChild(i);
+            nextNode = transform.GetChild(i + 1);
 
-            if (currentNode != null && NextNode != null)
+            if (currentNode != null && nextNode != null)
             {
-                Gizmos.DrawLine(currentNode.position, NextNode.position);
+                Gizmos.DrawLine(currentNode.position, nextNode.position);
             }
         }
         if (isLoop)

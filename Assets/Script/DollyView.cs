@@ -11,17 +11,17 @@ public class DollyView : AView
     {
         if (isAuto)
         {
-
+            distanceOnRail = rail.GetDistanceFromPosition(target.position);
         }
         else
         {
             float input = Input.GetAxis("Horizontal");
 
             distanceOnRail += input * speed * Time.deltaTime;
-            if (!rail.isLoop)
-            {
-                distanceOnRail = Mathf.Clamp(distanceOnRail, 0f, rail.GetLength());
-            }
+        }
+        if (!rail.isLoop)
+        {
+            distanceOnRail = Mathf.Clamp(distanceOnRail, 0f, rail.GetLength());
         }
     }
     public override CameraConfiguration GetConfiguration()
